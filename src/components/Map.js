@@ -7,7 +7,8 @@ export default class MapComponent extends Component {
     this.state = {
       lat: 1.357107,
       lng: 103.8194992,
-      zoom: 12
+      zoom: 12,
+      text: "Hello World"
     };
   }
 
@@ -23,6 +24,11 @@ export default class MapComponent extends Component {
             id="mapbox/streets-v11"
             accessToken="pk.eyJ1IjoiZW1pamF5IiwiYSI6ImNrNmtqbXN6YzA0cHUzcnJyYWN4anRjMTEifQ.UIQ_UNwanG23WQJ5PvCYuw"
           />
+          <Marker position={position}>
+            <Popup>
+              <div>{this.state.text}</div>
+            </Popup>
+          </Marker>
         </Map>
       </div>
     );
