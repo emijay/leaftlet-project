@@ -8,22 +8,46 @@ export default class MapComponent extends Component {
       lat: 1.357107,
       lng: 103.8194992,
       zoom: 12,
-      text: "Hello World",
+      text: "Centre of Singapore",
       currentPos: null,
       data: [
         {
+          id: "HSO_RCT",
           from_lat: 1.308684968569312,
-          from_long: 103.84879231452943,
-          id: "LTA HSO",
+          from_lng: 103.84879231452943,
           to_lat: 1.2938782089810292,
-          to_long: 103.85331451892854
+          to_lng: 103.85331451892854,
+          color: "red"
+        },
+        {
+          id: "HSO_NUS",
+          from_lat: 1.308684968569312,
+          from_lng: 103.84879231452943,
+          to_lat: 1.29589372269724,
+          to_lng: 103.77651214599611,
+          color: "blue"
+        }
+      ],
+      markers: [
+        {
+          key: "HSO",
+          lat: 1.308684968569312,
+          lng: 103.84879231452943,
+          content: "LTA HQ"
+        },
+        {
+          key: "RCT",
+          lat: 1.2938782089810292,
+          lng: 103.85331451892854,
+          content: "Accenture Office"
+        },
+        {
+          key: "NUS",
+          lat: 1.29589372269724,
+          lng: 103.77651214599611,
+          content: "NUS"
         }
       ]
-      //   markers: [
-      //     { key: "marker1", position: [51.5, -0.1], content: "My first popup" },
-      //     { key: "marker2", position: [51.51, -0.1], content: "My second popup" },
-      //     { key: "marker3", position: [51.49, -0.05], content: "My third popup" }
-      //   ]
     };
     this.handleClick = this.handleClick.bind(this);
   }
@@ -34,6 +58,8 @@ export default class MapComponent extends Component {
 
   render() {
     const position = [this.state.lat, this.state.lng];
+    const { markers } = this.state;
+
     return (
       <div className="leaflet-container">
         <Map
@@ -63,16 +89,25 @@ export default class MapComponent extends Component {
               </Popup>
             </Marker>
           )}
+          {markers.map(({ key, lat, lng, content }) => {
+            return (
+              <Marker key={key} position={[lat, lng]}>
+                <Popup>
+                  <div>{content}</div>
+                </Popup>
+              </Marker>
+            );
+          })}
           {this.state.data.map(
-            ({ id, from_lat, from_long, to_lat, to_long }) => {
+            ({ id, from_lat, from_lng, to_lat, to_lng, color }) => {
               return (
                 <Polyline
                   key={id}
                   positions={[
-                    [from_lat, from_long],
-                    [to_lat, to_long]
+                    [from_lat, from_lng],
+                    [to_lat, to_lng]
                   ]}
-                  color={"red"}
+                  color={color}
                 />
               );
             }
