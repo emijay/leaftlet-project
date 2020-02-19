@@ -5,8 +5,7 @@ export default class MapComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      lat: 1.357107,
-      lng: 103.8194992,
+      center: [1.3298700098535123, 103.82663726806642],
       zoom: 12,
       text: "Centre of Singapore",
       currentPos: null,
@@ -57,16 +56,11 @@ export default class MapComponent extends Component {
   }
 
   render() {
-    const position = [this.state.lat, this.state.lng];
-    const { markers } = this.state;
+    const { center, zoom, markers, text, currentPos } = this.state;
 
     return (
       <div className="leaflet-container">
-        <Map
-          center={position}
-          zoom={this.state.zoom}
-          onClick={this.handleClick}
-        >
+        <Map center={center} zoom={zoom} onClick={this.handleClick}>
           <TileLayer
             url="https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}"
             attribution='Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>'
@@ -74,17 +68,17 @@ export default class MapComponent extends Component {
             id="mapbox/streets-v11"
             accessToken="pk.eyJ1IjoiZW1pamF5IiwiYSI6ImNrNmtqbXN6YzA0cHUzcnJyYWN4anRjMTEifQ.UIQ_UNwanG23WQJ5PvCYuw"
           />
-          <Marker position={position}>
+          <Marker position={center}>
             <Popup>
-              <div>{this.state.text}</div>
+              <div>{text}</div>
             </Popup>
           </Marker>
           {this.state.currentPos && (
-            <Marker position={this.state.currentPos}>
-              <Popup position={this.state.currentPos}>
+            <Marker position={currentPos}>
+              <Popup position={currentPos}>
                 <div>
                   Current location:{" "}
-                  <pre>{JSON.stringify(this.state.currentPos, null, 2)}</pre>
+                  <pre>{JSON.stringify(currentPos, null, 2)}</pre>
                 </div>
               </Popup>
             </Marker>
