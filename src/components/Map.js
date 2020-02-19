@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+// import Control from "react-leaflet-control";
 import { Map, Marker, Popup, TileLayer, Polyline } from "react-leaflet";
+import LocateControl from "./LocateControl";
 
 export default class MapComponent extends Component {
   constructor(props) {
@@ -57,6 +59,13 @@ export default class MapComponent extends Component {
 
   render() {
     const { center, zoom, markers, text, currentPos } = this.state;
+    const locateOptions = {
+      position: "topleft",
+      strings: {
+        title: "Find Current Location"
+      },
+      onActivate: () => {} // callback before engine starts retrieving locations
+    };
 
     return (
       <div className="leaflet-container">
@@ -106,6 +115,7 @@ export default class MapComponent extends Component {
               );
             }
           )}
+          <LocateControl options={locateOptions} />
         </Map>
       </div>
     );
